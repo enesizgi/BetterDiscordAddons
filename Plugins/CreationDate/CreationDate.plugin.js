@@ -301,7 +301,30 @@ module.exports = (_ => {
 						.replace(/\$year/g, timeObj.getFullYear())
 						.trim().split(" ").filter(n => n).join(" ");
 				}
-				return timeString;
+
+				let newDate = new Date(timeString.split(",")[0]);
+
+				const monthNames = ["January", "February", "March", "April", "May", "June",
+									"July", "August", "September", "October", "November",
+									"December"
+									];
+
+
+				let clock = timeString.split(",")[1];
+				clock = clock.split(" ");
+
+				let clockTemp = clock[1].split(":");
+
+				clockTemp[0] = (clock[2] == "PM") || (clockTemp[0] == "12") ? (Number(clockTemp[0]) + 12) % 24 : Number(clockTemp[0]);
+
+
+			
+				newDate = monthNames[newDate.getMonth()] + " " +
+							String(newDate.getDate()) + " " + 
+							String(newDate.getFullYear()) + " " +
+							clockTemp.join(":"); 
+
+				return newDate; // normalde timeString return ediyordu, modifiye ettim.
 			}
 
 			cutOffSeconds (timeString) {
